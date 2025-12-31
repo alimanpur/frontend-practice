@@ -3,7 +3,9 @@ import FeaturesSection from '../components/FeaturesSection';
 
 const Features = () => {
   return (
-    <FeaturesSection />
+    <div style={{ paddingTop: '80px' }}>
+      <FeaturesSection />
+    </div>
   );
 };
 

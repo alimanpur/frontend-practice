@@ -3,7 +3,9 @@ import PricingSection from '../components/PricingSection';
 
 const Pricing = () => {
   return (
-    <PricingSection />
+    <div style={{ paddingTop: '80px' }}>
+      <PricingSection />
+    </div>
   );
 };
 

@@ -57,18 +57,11 @@ const Home = () => {
     setCurrentSlide(index);
   };
 
-  const getNavLinkStyle = (path) => ({
-    color: location.pathname === path ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.7)',
-    textDecoration: 'none',
-    fontSize: '16px',
-    fontWeight: location.pathname === path ? '500' : '400',
-    transition: 'color 0.3s ease'
-  });
-
   return (
     <div style={{ overflowX: 'hidden', width: '100%' }}>
       {/* Hero Section */}
       <div 
+        id="hero"
         style={{
           height: '100vh',
           backgroundImage: `linear-gradient(rgba(47, 24, 147, 0.8), rgba(47, 24, 147, 0.6)), url(${backgroundImage})`,
@@ -79,25 +72,10 @@ const Home = () => {
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          color: 'white'
+          color: 'white',
+          paddingTop: '80px'
         }}
       >
-        {/* Navigation */}
-        <nav style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px 0', position: 'relative', zIndex: 10 }}>
-          <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-            <a href="#" style={getNavLinkStyle('/')}>Home</a>
-            <a href="#features" onClick={(e) => { e.preventDefault(); document.getElementById('features-section')?.scrollIntoView({ behavior: 'smooth' }); }} style={getNavLinkStyle('/features')}>Features</a>
-            <a href="#pricing" onClick={(e) => { e.preventDefault(); document.getElementById('pricing-section')?.scrollIntoView({ behavior: 'smooth' }); }} style={getNavLinkStyle('/pricing')}>Pricing</a>
-            <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' }); }} style={getNavLinkStyle('/contact')}>Contact</a>
-            <div style={{ width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '20px' }}>
-              <span style={{ color: 'white', fontSize: '12px' }}>⚙</span>
-            </div>
-            <div style={{ backgroundColor: 'white', color: '#2F1893', padding: '8px 16px', borderRadius: '4px', fontSize: '14px', fontWeight: '600' }}>
-              Be
-            </div>
-          </div>
-        </nav>
-
         {/* Navigation arrows */}
         <button 
           onClick={prevSlide}

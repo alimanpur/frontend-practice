@@ -4,10 +4,10 @@ import TestimonialSection from '../components/TestimonialSection';
 
 const Form = () => {
   return (
-    <>
+    <div style={{ paddingTop: '80px' }}>
       <FormSection />
       <TestimonialSection />
-    </>
+    </div>
   );
 };
 

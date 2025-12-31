@@ -5,7 +5,6 @@ import FormSection from './FormSection';
 
 const FeaturesSection = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
-  const [isScrollLocked, setIsScrollLocked] = useState(false);
 
   const features = [
     {
@@ -58,32 +57,7 @@ const FeaturesSection = () => {
     }
   ];
 
-  useEffect(() => {
-    let scrollTimeout;
-    const handleWheel = (e) => {
-      const featuresElement = document.getElementById('features-section');
-      if (featuresElement) {
-        const rect = featuresElement.getBoundingClientRect();
-        if (rect.top <= 0 && rect.bottom > 0) {
-          e.preventDefault();
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            if (e.deltaY > 0 && currentFeature < features.length - 1) {
-              setCurrentFeature(prev => prev + 1);
-            } else if (e.deltaY < 0 && currentFeature > 0) {
-              setCurrentFeature(prev => prev - 1);
-            }
-          }, 100);
-        }
-      }
-    };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      clearTimeout(scrollTimeout);
-    };
-  }, [currentFeature, features.length]);
 
   return (
     <div 
@@ -94,8 +68,6 @@ const FeaturesSection = () => {
       }}
     >
         <div style={{
-          position: 'sticky',
-          top: 0,
           height: '100vh',
           backgroundImage: `linear-gradient(rgba(47, 24, 147, 0.7), rgba(47, 24, 147, 0.5)), url(${featuresBackground})`,
           backgroundSize: 'cover',
@@ -129,127 +101,113 @@ const FeaturesSection = () => {
           />
         </div>
 
-        {/* Content Container with Vertical Animation */}
+        {/* Content Container */}
         <div style={{
           position: 'absolute',
           left: '600px',
           top: '50%',
           transform: 'translateY(-50%)',
           width: '900px',
-          paddingLeft: '40px',
-          height: '100vh',
-          overflow: 'hidden'
+          paddingLeft: '40px'
         }}>
-          {/* All Features Content */}
+          {/* Current Feature Content */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
-            height: `${features.length * 100}vh`,
-            transform: `translateY(-${currentFeature * 100}vh)`,
-            transition: 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            justifyContent: 'center',
+            textAlign: 'left'
           }}>
-            {features.map((feature, index) => (
-              <div key={index} style={{
-                height: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                textAlign: 'left',
-                flexShrink: 0
-              }}>
-                <h2 style={{
-                  fontSize: '50px',
-                  fontWeight: '700',
-                  marginBottom: '30px',
-                  lineHeight: '1.2',
-                  color: 'white',
-                  maxWidth: '900px'
-                }}>
-                  {feature.title}
-                </h2>
+            <h2 style={{
+              fontSize: '50px',
+              fontWeight: '700',
+              marginBottom: '30px',
+              lineHeight: '1.2',
+              color: 'white',
+              maxWidth: '900px'
+            }}>
+              {features[currentFeature].title}
+            </h2>
 
-                <p style={{
-                  fontSize: '32px',
-                  color: 'rgba(255, 255, 255, 0.85)',
-                  marginBottom: '40px',
-                  lineHeight: '32px',
-                  maxWidth: '1200px'
-                }}>
-                  {feature.description}
-                </p>
+            <p style={{
+              fontSize: '32px',
+              color: 'rgba(255, 255, 255, 0.85)',
+              marginBottom: '40px',
+              lineHeight: '32px',
+              maxWidth: '1200px'
+            }}>
+              {features[currentFeature].description}
+            </p>
 
-                {/* Feature Cards */}
+            {/* Feature Cards */}
+            <div style={{
+              display: 'flex',
+              gap: '60px',
+              justifyContent: 'flex-start',
+              marginTop: '60px'
+            }}>
+              <div style={{ textAlign: 'left', width: '320px' }}>
                 <div style={{
                   display: 'flex',
-                  gap: '60px',
+                  alignItems: 'center',
                   justifyContent: 'flex-start',
-                  marginTop: '60px'
+                  marginBottom: '32px'
                 }}>
-                  <div style={{ textAlign: 'left', width: '320px' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      marginBottom: '32px'
-                    }}>
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                      </svg>
-                    </div>
-                    <h4 style={{
-                      fontSize: '18px',
-                      fontWeight: '700',
-                      letterSpacing: '1.2px',
-                      marginBottom: '20px',
-                      color: 'white',
-                      textTransform: 'uppercase'
-                    }}>
-                      {feature.leftTitle}
-                    </h4>
-                    <p style={{
-                      fontSize: '20px',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      lineHeight: '1.6'
-                    }}>
-                      {feature.leftDescription}
-                    </p>
-                  </div>
-
-                  <div style={{ textAlign: 'left', width: '320px' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                      marginBottom: '32px'
-                    }}>
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                        <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
-                        <path d="M11 3L8 9l4 12 4-12-3-6"/>
-                        <path d="M2 9h20"/>
-                      </svg>
-                    </div>
-                    <h4 style={{
-                      fontSize: '18px',
-                      fontWeight: '700',
-                      letterSpacing: '1.2px',
-                      marginBottom: '20px',
-                      color: 'white',
-                      textTransform: 'uppercase'
-                    }}>
-                      {feature.rightTitle}
-                    </h4>
-                    <p style={{
-                      fontSize: '20px',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      lineHeight: '1.6'
-                    }}>
-                      {feature.rightDescription}
-                    </p>
-                  </div>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
                 </div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  letterSpacing: '1.2px',
+                  marginBottom: '20px',
+                  color: 'white',
+                  textTransform: 'uppercase'
+                }}>
+                  {features[currentFeature].leftTitle}
+                </h4>
+                <p style={{
+                  fontSize: '20px',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  lineHeight: '1.6'
+                }}>
+                  {features[currentFeature].leftDescription}
+                </p>
               </div>
-            ))}
+
+              <div style={{ textAlign: 'left', width: '320px' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  marginBottom: '32px'
+                }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+                    <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
+                    <path d="M11 3L8 9l4 12 4-12-3-6"/>
+                    <path d="M2 9h20"/>
+                  </svg>
+                </div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  letterSpacing: '1.2px',
+                  marginBottom: '20px',
+                  color: 'white',
+                  textTransform: 'uppercase'
+                }}>
+                  {features[currentFeature].rightTitle}
+                </h4>
+                <p style={{
+                  fontSize: '20px',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  lineHeight: '1.6'
+                }}>
+                  {features[currentFeature].rightDescription}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -267,6 +225,7 @@ const FeaturesSection = () => {
           {features.map((_, index) => (
             <div
               key={index}
+              onClick={() => setCurrentFeature(index)}
               style={{
                 width: currentFeature === index ? '12px' : '8px',
                 height: currentFeature === index ? '12px' : '8px',
@@ -274,7 +233,8 @@ const FeaturesSection = () => {
                 borderRadius: '50%',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: currentFeature === index ? 'scale(1.2)' : 'scale(1)',
-                boxShadow: currentFeature === index ? '0 0 20px rgba(255, 255, 255, 0.5)' : 'none'
+                boxShadow: currentFeature === index ? '0 0 20px rgba(255, 255, 255, 0.5)' : 'none',
+                cursor: 'pointer'
               }}
             />
           ))}

@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
+import { formContent } from '../data/Data.js';
 import featuresBackground from '../assets/495a76abfa6125a690a426b8fcb3bbfd55392e02.jpg';
 
 const FormSection = () => {
-  console.log('FormSection rendering...');
   const [activeTab, setActiveTab] = useState('signup');
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -22,227 +16,76 @@ const FormSection = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      position: 'relative',
-      backgroundImage: `linear-gradient(rgba(47, 24, 147, 0.7), rgba(47, 24, 147, 0.5)), url(${featuresBackground})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '0 120px',
-      color: 'white',
-      gap: '120px'
-    }}>
+    <section 
+      className="form-section-wrapper"
+      style={{ '--form-bg': `url(${featuresBackground})` }}
+    >
       {/* Left Content */}
-      <div style={{
-        flex: '0 0 auto',
-        marginRight: '30px',
-      }}>
-        <h1 style={{
-          fontSize: '56px',
-          width: '600px',
-          height: '208px',
-          fontWeight: '700',
-          lineHeight: '60px',
-          marginBottom: '50px',
-          color: 'white'
-        }}>
-          We solve digital<br/>problems with an<br/>outstanding<br/>creative flare
+      <div className="form-left-content">
+        <h1 className="form-main-title">
+          {formContent.title.split('creative').map((text, i) => 
+            i === 0 ? <React.Fragment key={i}>{text}<br/></React.Fragment> : `creative ${text}`
+          )}
         </h1>
-        
-        <p style={{
-          fontSize: '22px',
-          color: 'rgba(255, 255, 255, 0.8)',
-          lineHeight: '',
-          width: '450px',
-          height: '78px',
-          maxWidth: '450px',
-          fontWeight: '400'
-        }}>
-          We have created a new product that will help designers, developers and companies create websites for their startups quickly and easily.
+        <p className="form-main-description">
+          {formContent.description}
         </p>
       </div>
 
-      {/* Right Form */}
-      <div style={{
-        backgroundColor: 'white',
-        borderRadius: '15px',
-        padding: '48px 40px',
-        width: '470px',
-        boxShadow: '0 25px 80px rgba(0, 0, 0, 0.15)',
-        flex: '0 0 auto'
-      }}>
+      {/* Right Form Card */}
+      <div className="form-card">
         {/* Tab Headers */}
-        <div style={{
-          display: 'flex',
-          marginBottom: '40px',
-          borderBottom: '1px solid #e5e5e5'
-        }}>
+        <div className="form-tabs">
           <button
             onClick={() => setActiveTab('signup')}
-            style={{
-              flex: '1',
-              padding: '16px 0',
-              fontSize: '16px',
-              fontWeight: '600',
-              color: activeTab === 'signup' ? '#333' : '#999',
-              backgroundColor: 'transparent',
-              border: 'none',
-              borderBottom: activeTab === 'signup' ? '3px solid #333' : '3px solid transparent',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
+            className={`form-tab-btn ${activeTab === 'signup' ? 'active' : ''}`}
           >
             SIGN UP
           </button>
           <button
             onClick={() => setActiveTab('login')}
-            style={{
-              flex: '1',
-              padding: '16px 0',
-              fontSize: '16px',
-              fontWeight: '600',
-              color: activeTab === 'login' ? '#333' : '#999',
-              backgroundColor: 'transparent',
-              border: 'none',
-              borderBottom: activeTab === 'login' ? '3px solid #333' : '3px solid transparent',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
+            className={`form-tab-btn ${activeTab === 'login' ? 'active' : ''}`}
           >
             LOGIN
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '24px' }}>
+        <form onSubmit={handleSubmit} className="actual-form">
+          <div className="input-group">
             <input
               type="email"
               name="email"
               placeholder="Your email"
               value={formData.email}
               onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '16px 20px',
-                fontSize: '16px',
-                border: '1px solid #e5e5e5',
-                borderRadius: '50px',
-                backgroundColor: '#f8f9fa',
-                color: '#333',
-                outline: 'none',
-                transition: 'all 0.3s ease',
-                boxSizing: 'border-box'
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#007bff';
-                e.target.style.backgroundColor = 'white';
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = '#e5e5e5';
-                e.target.style.backgroundColor = '#f8f9fa';
-              }}
+              className="form-input"
             />
           </div>
 
-          <div style={{ marginBottom: '32px' }}>
+          <div className="input-group">
             <input
               type="password"
               name="password"
               placeholder="Your password"
               value={formData.password}
               onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '16px 20px',
-                fontSize: '16px',
-                border: '1px solid #e5e5e5',
-                borderRadius: '50px',
-                backgroundColor: '#f8f9fa',
-                color: '#333',
-                outline: 'none',
-                transition: 'all 0.3s ease',
-                boxSizing: 'border-box'
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#007bff';
-                e.target.style.backgroundColor = 'white';
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = '#e5e5e5';
-                e.target.style.backgroundColor = '#f8f9fa';
-              }}
+              className="form-input"
             />
           </div>
 
-          <button
-            type="submit"
-            style={{
-              width: '100%',
-              padding: '16px',
-              fontSize: '16px',
-              fontWeight: '600',
-              color: 'white',
-              backgroundColor: '#00d4aa',
-              border: 'none',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              marginBottom: '20px',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = '#00c299';
-              e.target.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = '#00d4aa';
-              e.target.style.transform = 'translateY(0)';
-            }}
-          >
-            Create an Account
+          <button type="submit" className="submit-btn primary-btn">
+            {activeTab === 'signup' ? 'Create an Account' : 'Login'}
           </button>
 
-          <div style={{
-            textAlign: 'center',
-            color: '#999',
-            fontSize: '14px',
-            marginBottom: '20px'
-          }}>
-            or
-          </div>
+          <div className="form-divider">or</div>
 
-          <button
-            type="button"
-            style={{
-              width: '100%',
-              padding: '16px',
-              fontSize: '16px',
-              fontWeight: '600',
-              color: 'white',
-              backgroundColor: '#1da1f2',
-              border: 'none',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = '#0d8bd9';
-              e.target.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = '#1da1f2';
-              e.target.style.transform = 'translateY(0)';
-            }}
-          >
+          <button type="button" className="submit-btn twitter-btn">
             Login via Twitter
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
